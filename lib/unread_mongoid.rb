@@ -1,7 +1,0 @@
-require 'mongoid'
-require 'unread_mongoid/base'
-require 'unread_mongoid/read_mark'
-require 'unread_mongoid/readable'
-require 'unread_mongoid/reader'
-require 'unread_mongoid/scopes'
-require 'unread_mongoid/version'

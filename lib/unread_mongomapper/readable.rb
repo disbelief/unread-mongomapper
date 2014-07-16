@@ -1,9 +1,9 @@
-module UnreadMongoid
+module UnreadMongomapper
   module Readable
     module ClassMethods
       def mark_as_read!(target, options)
         reader = options[:for]
-        UnreadMongoid::Reader.assert_reader(reader)
+        UnreadMongomapper::Reader.assert_reader(reader)
 
         readables_to_mark = if(target == :all)
                               self.unread_by(reader)
@@ -21,14 +21,14 @@ module UnreadMongoid
 
     module InstanceMethods
       def unread?(reader)
-        UnreadMongoid::Reader.assert_reader(reader)
+        UnreadMongomapper::Reader.assert_reader(reader)
 
         ReadMark.where(reader: reader, readable: self).empty?
       end
 
       def mark_as_read!(options)
         reader = options[:for]
-        UnreadMongoid::Reader.assert_reader(reader)
+        UnreadMongomapper::Reader.assert_reader(reader)
 
         ReadMark.create(reader: reader, readable: self)
       end

@@ -1,15 +1,20 @@
 require 'test/unit'
-require 'mongoid'
+require 'mongo_mapper'
 require 'timecop'
 
-ENV['MONGOID_ENV'] = 'test'
-Mongoid.load!(File.dirname(__FILE__) + '/mongoid.yml')
+log_dir = File.expand_path('../../log', __FILE__)
+FileUtils.mkdir_p(log_dir) unless File.exist?(log_dir)
+logger = Logger.new(log_dir + '/test.log')
 
-require 'unread_mongoid'
+MongoMapper.connection = Mongo::MongoClient.new('127.0.0.1', 27017, logger: logger)
+MongoMapper.database = 'test'
+MongoMapper.database.collections.each { |c| c.drop_indexes }
+
+require 'unread_mongomapper'
 
 class User
-  include Mongoid::Document
-  include UnreadMongoid
+  include MongoMapper::Document
+  include UnreadMongomapper
 
   acts_as_reader
 
@@ -20,7 +25,7 @@ class Email
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  include UnreadMongoid
+  include UnreadMongomapper
 
   acts_as_readable
 

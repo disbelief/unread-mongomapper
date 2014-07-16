@@ -1,0 +1,7 @@
+require 'mongo_mapper'
+require 'unread_mongomapper/base'
+require 'unread_mongomapper/read_mark'
+require 'unread_mongomapper/readable'
+require 'unread_mongomapper/reader'
+require 'unread_mongomapper/scopes'
+require 'unread_mongomapper/version'

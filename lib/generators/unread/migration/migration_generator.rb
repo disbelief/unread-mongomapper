@@ -1,7 +1,7 @@
 require 'rails/generators'
 require 'rails/generators/migration'
 
-module UnreadMongoid
+module UnreadMongomapper
   class MigrationGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 

@@ -1,16 +1,18 @@
-module UnreadMongoid
+module UnreadMongomapper
   module Readable
     module Scopes
       def unread_by(reader)
-        UnreadMongoid::Reader.assert_reader(reader)
+        UnreadMongomapper::Reader.assert_reader(reader)
 
-        self.not_in(id: read_ids(reader))
+        # self.not_in(id: read_ids(reader))
+        self.where :id.nin => read_ids(reader)
       end
 
       def read_by(reader)
-        UnreadMongoid::Reader.assert_reader(reader)
+        UnreadMongomapper::Reader.assert_reader(reader)
 
-        self.in(id: read_ids(reader))
+        # self.in(id: read_ids(reader))
+        self.where :id.in => read_ids(reader)
       end
 
       private

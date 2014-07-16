@@ -1,7 +1,7 @@
 Unread-Mongoid
 ======
 
-Ruby gem to manage read/unread status of Mongoid objects.
+Ruby gem to manage read/unread status of MongoMapper objects.
 
 ## Credit
 First and foremost this is a fork of [Unread](https://github.com/ledermann/unread) by [Georg Ledermann](http://www.georg-ledermann.de). If you are using a relational DB, make sure to check it out.
@@ -19,7 +19,7 @@ First and foremost this is a fork of [Unread](https://github.com/ledermann/unrea
 ```ruby
 class User
   include Mongoid::Document
-  include UnreadMongoid
+  include UnreadMongomapper
 
   acts_as_reader
 end
@@ -28,7 +28,7 @@ class Message
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  include UnreadMongoid
+  include UnreadMongomapper
   acts_as_readable
 end
 
