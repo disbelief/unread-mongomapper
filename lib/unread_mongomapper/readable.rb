@@ -23,14 +23,14 @@ module UnreadMongomapper
       def unread?(reader)
         UnreadMongomapper::Reader.assert_reader(reader)
 
-        ReadMark.where(reader: reader, readable: self).empty?
+        ReadMark.where(reader_id: reader.id, reader_type: reader.class.to_s, readable_id: self.id, readable_type: self.class.to_s).empty?
       end
 
       def mark_as_read!(options)
         reader = options[:for]
         UnreadMongomapper::Reader.assert_reader(reader)
 
-        ReadMark.create(reader: reader, readable: self)
+        ReadMark.create(reader_id: reader.id, reader_type: reader.class.to_s, readable_id: self.id, readable_type: self.class.to_s)
       end
 
       def mark_as_unread!

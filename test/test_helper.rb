@@ -13,24 +13,23 @@ MongoMapper.database.collections.each { |c| c.drop_indexes }
 require 'unread_mongomapper'
 
 class User
-  include MongoMapper::Document
+  include MongoMapper::Document; safe
   include UnreadMongomapper
 
   acts_as_reader
 
-  field :name, type: String
+  key :name, type: String
 end
 
 class Email
-  include Mongoid::Document
-  include Mongoid::Timestamps
+  include MongoMapper::Document; safe
 
   include UnreadMongomapper
 
   acts_as_readable
 
-  field :subject, type: String
-  field :content, type: String
-end
+  key :subject, type: String
+  key :content, type: String
+  timestamps!
 
-puts "Testing with Mongoid #{Mongoid::VERSION}"
+end

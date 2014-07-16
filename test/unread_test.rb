@@ -19,8 +19,8 @@ class UnreadTest < ActiveSupport::TestCase
   end
 
   def test_scope
-    assert_equal [@email1, @email2], Email.unread_by(@reader)
-    assert_equal [@email1, @email2], Email.unread_by(@other_reader)
+    assert_equal [@email1, @email2], Email.unread_by(@reader).entries
+    assert_equal [@email1, @email2], Email.unread_by(@other_reader).entries
 
     assert_equal 2, Email.unread_by(@reader).count
     assert_equal 2, Email.unread_by(@other_reader).count
@@ -87,13 +87,13 @@ class UnreadTest < ActiveSupport::TestCase
     @email1.mark_as_read! :for => @reader
     @email1.mark_as_read! :for => @reader
 
-    assert_equal 1, ReadMark.where(reader: @reader).count
+    assert_equal 1, ReadMark.where(reader_id: @reader.id, reader_type: @reader.class.to_s).count
   end
 
   def test_mark_all_as_read
     Email.mark_as_read! :all, :for => @reader
 
-    assert_equal [], Email.unread_by(@reader)
+    assert_equal [], Email.unread_by(@reader).entries
   end
 
   def test_destroys_readmarks_when_readable_is_destroyed
@@ -128,7 +128,7 @@ class UnreadTest < ActiveSupport::TestCase
   end
 
   def test_does_not_destroy_reader_when_readmark_is_destroyed
-    reader_id = @reader
+    reader_id = @reader.id
 
     @email1.mark_as_read! for: @reader
 
